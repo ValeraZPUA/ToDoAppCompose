@@ -1,11 +1,12 @@
 package com.example.todoappcompose.data.repositories
 
-import android.app.DownloadManager.Query
 import com.example.todoappcompose.data.db.ToDoDao
 import com.example.todoappcompose.data.models.ToDoTask
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@ViewModelScoped
 class ToDoRepository @Inject constructor(
     private val toDoDao: ToDoDao
 ) {
