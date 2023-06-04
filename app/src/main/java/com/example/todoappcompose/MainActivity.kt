@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.todoappcompose.navigation.SetupNavigation
 import com.example.todoappcompose.ui.theme.ToDoAppComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +21,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ToDoAppComposeTheme {
-
+                val navHostController = rememberNavController()
+                SetupNavigation(navController = navHostController)
             }
         }
     }
