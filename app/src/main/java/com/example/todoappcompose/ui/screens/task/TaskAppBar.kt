@@ -23,9 +23,18 @@ import com.example.todoappcompose.util.Action
 
 @Composable
 fun TaskAppBar(
+    selectedTask: ToDoTask?,
     navigationToListScreen: (Action) -> Unit
 ) {
-    NewTaskAppBar(navigationToListScreen = navigationToListScreen)
+    if (selectedTask == null) {
+        NewTaskAppBar(navigationToListScreen = navigationToListScreen)
+    } else {
+        ExistingTaskAppBar(
+            selectedTask = selectedTask,
+            navigationToListScreen = navigationToListScreen
+        )
+    }
+
 }
 
 @Composable
@@ -149,7 +158,15 @@ fun AddAction(
 @Preview
 @Composable
 fun TaskAppBarPreview() {
-    TaskAppBar(navigationToListScreen = {})
+    TaskAppBar(
+        selectedTask = ToDoTask(
+            id = 0,
+            title = "title",
+            description = "asd",
+            priority = Priority.MEDIUM
+        ),
+        navigationToListScreen = {}
+    )
 }
 
 @Preview
