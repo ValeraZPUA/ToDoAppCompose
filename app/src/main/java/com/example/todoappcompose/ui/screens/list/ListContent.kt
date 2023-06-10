@@ -30,9 +30,27 @@ import com.example.todoappcompose.ui.theme.PRIORITY_INDICATOR_SIZE
 import com.example.todoappcompose.ui.theme.TASK_ITEM_ELEVATION
 import com.example.todoappcompose.ui.theme.taskItemBackgroundColor
 import com.example.todoappcompose.ui.theme.taskItemTextColor
+import com.example.todoappcompose.util.RequestState
 
 @Composable
 fun ListContent(
+    allTasks: RequestState<List<ToDoTask>>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (allTasks is RequestState.Success) {
+        if (allTasks.data.isEmpty()) {
+            EmptyContent()
+        } else {
+            DisplayTasks(
+                allTasks = allTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    }
+}
+
+@Composable
+fun DisplayTasks(
     allTasks: List<ToDoTask>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
