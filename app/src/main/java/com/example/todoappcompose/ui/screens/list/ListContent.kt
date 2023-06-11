@@ -31,21 +31,44 @@ import com.example.todoappcompose.ui.theme.TASK_ITEM_ELEVATION
 import com.example.todoappcompose.ui.theme.taskItemBackgroundColor
 import com.example.todoappcompose.ui.theme.taskItemTextColor
 import com.example.todoappcompose.util.RequestState
+import com.example.todoappcompose.util.SearchAppBarState
 
 @Composable
 fun ListContent(
     allTasks: RequestState<List<ToDoTask>>,
+    searchedTasks: RequestState<List<ToDoTask>>,
+    searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (allTasks is RequestState.Success) {
-        if (allTasks.data.isEmpty()) {
-            EmptyContent()
-        } else {
-            DisplayTasks(
-                allTasks = allTasks.data,
+    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
+        if (searchedTasks is RequestState.Success) {
+            HandleListContent(
+                tasks = searchedTasks.data,
                 navigateToTaskScreen = navigateToTaskScreen
             )
         }
+    } else {
+        if (allTasks is RequestState.Success) {
+            HandleListContent(
+                tasks = allTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    }
+}
+
+@Composable
+fun HandleListContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (tasks.isEmpty()) {
+        EmptyContent()
+    } else {
+        DisplayTasks(
+            allTasks = tasks,
+            navigateToTaskScreen = navigateToTaskScreen
+        )
     }
 }
 
