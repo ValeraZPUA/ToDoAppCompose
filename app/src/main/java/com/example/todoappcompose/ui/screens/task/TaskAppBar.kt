@@ -11,10 +11,15 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoappcompose.R
+import com.example.todoappcompose.components.DisplayAlertDialog
 import com.example.todoappcompose.data.models.Priority
 import com.example.todoappcompose.data.models.ToDoTask
 import com.example.todoappcompose.ui.theme.topAppBarBackgroundColor
@@ -83,17 +88,19 @@ fun ExistingTaskAppBar(
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-            DeleteAction(onDeleteClicked = navigationToListScreen)
-            UpdateAction(onUpdateClicked = navigationToListScreen)
+            ExistingTaskAppBarAction(
+                selectedTask = selectedTask,
+                navigationToListScreen = navigationToListScreen
+            )
         }
     )
 }
 
 @Composable
 fun DeleteAction(
-    onDeleteClicked: (Action) -> Unit
+    onDeleteClicked: () -> Unit
 ) {
-    IconButton(onClick = { onDeleteClicked(Action.DELETE) }) {
+    IconButton(onClick = { onDeleteClicked() }) {
         Icon(
             imageVector = Icons.Filled.Delete,
             contentDescription = stringResource(R.string.delete_icon),
@@ -181,4 +188,39 @@ fun ExistingTaskAppBarPreview() {
             priority = Priority.MEDIUM
         )
     )
+}
+
+@Composable
+fun ExistingTaskAppBarAction(
+    selectedTask: ToDoTask,
+    navigationToListScreen: (Action) -> Unit,
+) {
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+
+    DisplayAlertDialog(
+        title = stringResource(
+            id = R.string.delete_task,
+            selectedTask.title
+        ),
+        message = stringResource(
+            id = R.string.delete_task_confirmation,
+            selectedTask.title
+        ),
+        openDialog = openDialog,
+        onCloseDialog = {
+            openDialog = false
+        },
+        onYesClicked = {
+            navigationToListScreen(Action.DELETE)
+        }
+    )
+
+    DeleteAction(
+        onDeleteClicked = {
+            openDialog = true
+        }
+    )
+    UpdateAction(onUpdateClicked = navigationToListScreen)
 }
