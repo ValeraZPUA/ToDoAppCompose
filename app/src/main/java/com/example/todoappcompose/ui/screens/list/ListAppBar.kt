@@ -42,6 +42,7 @@ import com.example.todoappcompose.ui.theme.Typography
 import com.example.todoappcompose.ui.theme.topAppBarBackgroundColor
 import com.example.todoappcompose.ui.theme.topAppBarContentColor
 import com.example.todoappcompose.ui.viewModels.SharedViewModel
+import com.example.todoappcompose.util.Action
 import com.example.todoappcompose.util.SearchAppBarState
 import com.example.todoappcompose.util.TrailingIconState
 
@@ -58,7 +59,9 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value = SearchAppBarState.OPEN
                 },
                 onSortClicked = { },
-                onDeleteClicked = { }
+                onDeleteAllClicked = {
+                    sharedViewModel.action.value = Action.DELETE_ALL
+                }
             )
         }
 
@@ -190,7 +193,7 @@ fun SearchAppBar(
 fun DefaultListAppBar(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteAllClicked: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -203,7 +206,7 @@ fun DefaultListAppBar(
             ListAppBarActions(
                 onSearchClicked,
                 onSortClicked,
-                onDeleteClicked
+                onDeleteAllClicked
             )
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor
@@ -214,7 +217,7 @@ fun DefaultListAppBar(
 fun ListAppBarActions(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteAllClicked: () -> Unit
 ) {
     SearchAction(
         onSearchClicked = onSearchClicked
@@ -223,7 +226,7 @@ fun ListAppBarActions(
         onSortClicked = onSortClicked
     )
     DeleteAllAction(
-        onDeleteClicked = onDeleteClicked
+        onDeleteAllClicked = onDeleteAllClicked
     )
 }
 
@@ -296,7 +299,7 @@ fun SortAction(
 
 @Composable
 fun DeleteAllAction(
-    onDeleteClicked: () -> Unit
+    onDeleteAllClicked: () -> Unit
 ) {
     var expanded by remember {
         mutableStateOf(false)
@@ -319,7 +322,7 @@ fun DeleteAllAction(
             DropdownMenuItem(
                 onClick = {
                     expanded = false
-                    onDeleteClicked()
+                    onDeleteAllClicked()
                 }
             ) {
                 Text(
@@ -338,7 +341,7 @@ private fun DefaultListAppBarPreview() {
     DefaultListAppBar(
         onSearchClicked = {},
         onSortClicked = {},
-        onDeleteClicked = {}
+        onDeleteAllClicked = {}
     )
 }
 
