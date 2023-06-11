@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.example.todoappcompose.ui.screens.task.TaskScreen
 import com.example.todoappcompose.ui.viewModels.SharedViewModel
 import com.example.todoappcompose.util.Action
+import com.example.todoappcompose.util.Constants.DEFAULT_INT_VALUE
 import com.example.todoappcompose.util.Constants.TASK_ARGUMENT_KEY
 import com.example.todoappcompose.util.Constants.TASK_SCREEN
 
@@ -28,7 +29,9 @@ fun NavGraphBuilder.taskComposable(
         val selectedTask by sharedViewModel.selectedTask.collectAsState()
 
         LaunchedEffect(key1 = selectedTask) {
-            sharedViewModel.updateTaskFields(selectedTask = selectedTask)
+            if (selectedTask != null || taskId == DEFAULT_INT_VALUE) {
+                sharedViewModel.updateTaskFields(selectedTask = selectedTask)
+            }
         }
 
         TaskScreen(
