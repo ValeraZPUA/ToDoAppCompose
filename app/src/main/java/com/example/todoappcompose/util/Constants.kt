@@ -13,4 +13,6 @@ object Constants {
 
     const val DEFAULT_INT_VALUE = -1
 
+    const val MAX_TITLE_LENGTH = 20
+
 }
