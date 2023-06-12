@@ -33,8 +33,7 @@ class DateStoreRepository @Inject constructor(
 
     suspend fun persistSortState(priority: Priority) {
         dataStore.edit { preference ->
-        preference[PreferenceKey.sortKey] = priority.name
-
+            preference[PreferenceKey.sortKey] = priority.name
         }
     }
 
