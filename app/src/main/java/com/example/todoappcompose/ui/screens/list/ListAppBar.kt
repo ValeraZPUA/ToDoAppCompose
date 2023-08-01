@@ -45,7 +45,6 @@ import com.example.todoappcompose.ui.theme.topAppBarContentColor
 import com.example.todoappcompose.ui.viewModels.SharedViewModel
 import com.example.todoappcompose.util.Action
 import com.example.todoappcompose.util.SearchAppBarState
-import com.example.todoappcompose.util.TrailingIconState
 
 @Composable
 fun ListAppBar(
@@ -97,10 +96,6 @@ fun SearchAppBar(
     onSearchClicked: (String) -> Unit,
 //    focusRequester: FocusRequester
 ) {
-
-    var trailingIconState by remember {
-        mutableStateOf(TrailingIconState.READY_TO_DELETE)
-    }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,21 +142,10 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        //not necessary state, I guess
-                        when (trailingIconState) {
-                            TrailingIconState.READY_TO_DELETE -> {
-                                onTextChange("")
-                                trailingIconState = TrailingIconState.READY_TO_CLOSE
-                            }
-
-                            TrailingIconState.READY_TO_CLOSE -> {
-                                if (text.isNotEmpty()) {
-                                    onTextChange("")
-                                } else {
-                                    onCloseClicked()
-                                    trailingIconState = TrailingIconState.READY_TO_DELETE
-                                }
-                            }
+                        if (text.isNotEmpty()) {
+                            onTextChange("")
+                        } else {
+                            onCloseClicked()
                         }
                     }
                 ) {
