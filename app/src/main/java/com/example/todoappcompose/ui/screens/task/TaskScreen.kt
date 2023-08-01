@@ -81,7 +81,8 @@ private fun displayToast(context: Context) {
 
 @Composable
 fun BackHandler(
-    backDispatcher: OnBackPressedDispatcher? = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
+    backDispatcher: OnBackPressedDispatcher? =
+        LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher,
     onBackPress: () -> Unit
 ) {
     val currentOnBackPressed by rememberUpdatedState(newValue = onBackPress)
