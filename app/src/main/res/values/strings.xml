@@ -25,4 +25,5 @@
     <string name="delete">DELETE</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="to_do_logo">To Do Logo</string>
 </resources>
