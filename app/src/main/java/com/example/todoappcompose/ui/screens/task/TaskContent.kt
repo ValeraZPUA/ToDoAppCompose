@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoappcompose.R
 import com.example.todoappcompose.components.PriorityDropDown
 import com.example.todoappcompose.data.models.Priority
@@ -71,4 +72,17 @@ fun TaskContent(
             textStyle = MaterialTheme.typography.body1
         )
     }
+}
+
+@Composable
+@Preview
+fun TestPreview() {
+    TaskContent(
+        title = "Preview Tasl",
+        onTitleChange = {},
+        description = "Preview description",
+        onDescriptionChange = {},
+        priority = Priority.HIGH,
+        onPrioritySelected = {}
+    )
 }
