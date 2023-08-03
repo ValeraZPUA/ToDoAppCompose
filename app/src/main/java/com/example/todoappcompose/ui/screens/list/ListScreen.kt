@@ -49,10 +49,10 @@ fun ListScreen(
     DisplaySnackBar(
         scaffoldState = scaffoldState,
         onComplete = {
-            sharedViewModel.action.value
+            sharedViewModel.updateAction(newAction = it)
         },
         onUndoClicked = {
-            sharedViewModel.action.value = it
+            sharedViewModel.updateAction(newAction = it)
         },
         taskTitle = sharedViewModel.title.value,
         action = action
@@ -76,7 +76,7 @@ fun ListScreen(
                 lowPriorityTasks = lowPriorityTasks,
                 highPriorityTasks = highPriorityTasks,
                 onSwipeToDelete = { action, task ->
-                    sharedViewModel.action.value = action
+                    sharedViewModel.updateAction(newAction = action)
                     sharedViewModel.updateTaskFields(selectedTask = task)
                     scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
                 },

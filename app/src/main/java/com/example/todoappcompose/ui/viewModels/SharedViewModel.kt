@@ -1,7 +1,9 @@
 package com.example.todoappcompose.ui.viewModels
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todoappcompose.data.models.Priority
@@ -28,15 +30,15 @@ class SharedViewModel @Inject constructor(
     private val dataStoreRepository: DateStoreRepository
 ) : ViewModel() {
 
-    val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
+    var action by mutableStateOf(Action.NO_ACTION)
+        private set
 
+    //TODO do the sema as above for these vals:
     val id: MutableState<Int> = mutableStateOf(0)
     val title: MutableState<String> = mutableStateOf("")
     val description: MutableState<String> = mutableStateOf("")
     val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
-
     val searchAppBarState: MutableState<SearchAppBarState> = mutableStateOf(SearchAppBarState.CLOSE)
-
     val searchTextState: MutableState<String> = mutableStateOf("")
 
     private val _allTAsks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
@@ -223,5 +225,8 @@ class SharedViewModel @Inject constructor(
         return title.value.isNotEmpty() && description.value.isNotEmpty()
     }
 
+    fun updateAction(newAction: Action) {
+        action = newAction
+    }
 
 }
