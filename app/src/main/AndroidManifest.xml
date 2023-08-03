@@ -16,7 +16,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ToDoAppCompose">
+            android:theme="@style/Theme.ToDoAppCompose.MYSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
